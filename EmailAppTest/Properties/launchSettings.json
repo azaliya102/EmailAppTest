@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EmailAppTest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "password": "rpso icbt xjju ojjy"
+      }
+    }
+  }
+}
