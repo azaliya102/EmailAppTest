@@ -11,7 +11,6 @@ public class Email
         Message.From.Add(new MailboxAddress(fromName, fromAddress));
         Message.To.Add(MailboxAddress.Parse(toAddress));
         Message.Subject = subject;
-
         bodyBuilder = new BodyBuilder();
         bodyBuilder.TextBody = body;
     }
