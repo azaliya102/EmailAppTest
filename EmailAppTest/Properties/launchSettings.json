@@ -1,9 +1,13 @@
 {
   "profiles": {
-    "EmailAppTest": {
-      "commandName": "Project",
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\Azalia\\source\\repos\\EmailAppTest\\EmailAppTest\\bin\\Debug\\net8.0\\EmailAppTest.exe",
+      "workingDirectory": "C:\\Users\\Azalia\\source\\repos\\EmailAppTest\\EmailAppTest\\bin\\Debug\\net8.0\\",
       "environmentVariables": {
-        "password": "rpso icbt xjju ojjy"
+        "password": "rpso icbt xjju ojjy",
+        "emailAdressSender": "azaliamuratova628@gmail.com",
+        "emailAddressRecipient": "indonesianwesleysnipes@gmail.com"
       }
     }
   }
