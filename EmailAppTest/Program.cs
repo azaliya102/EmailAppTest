@@ -10,7 +10,7 @@ class Program
         string emailAddressRecipient = Environment.GetEnvironmentVariable("emailAddressRecipient");
         string password = Environment.GetEnvironmentVariable("password");
 
-        string body = "HELLO!";
+        string body = "HELLO! HELLO! HELLO!";
         string subject = "Test Email";
 
         var email = new Email("Tester", emailAdressSender, emailAddressRecipient, subject, body);
@@ -23,14 +23,14 @@ class Program
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 email.AddAttachment(openFileDialog.FileName);
-                email.BuildMessage();
-
-                var emailSender = new EmailSender("smtp.gmail.com", 465, true);
-                emailSender.SendEmail(email, emailAdressSender, password);
             }
             else
             {
-                Console.WriteLine("No image.");
+                Console.WriteLine("No image, but that's okay");
+                email.BuildMessage();
+                var emailSender = new EmailSender("smtp.gmail.com", 465, true);
+                emailSender.SendEmail(email, emailAdressSender, password);
+
             }
         }
     }
