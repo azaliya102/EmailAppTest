@@ -7,14 +7,14 @@ class Program
     {
         using (var context = new AppDbContext())
         {
-            //// a simple one 
+            // a simple one 
 
-            //var salaries = context.Employees.Select(emp => emp.sal).ToList();
+            var salaries = context.Employees.Select(emp => emp.sal).ToList();
 
-            //foreach (var salary in salaries)
-            //{
-            //    Console.WriteLine(salary);
-            //}
+            foreach (var salary in salaries)
+            {
+                Console.WriteLine(salary);
+            }
 
             // inner - join  
 
