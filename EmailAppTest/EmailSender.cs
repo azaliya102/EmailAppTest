@@ -1,6 +1,7 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using MimeKit;
 using System;
-using System.Net.Mail;
 
 public class EmailSender
 {
@@ -17,11 +18,11 @@ public class EmailSender
 
     public void SendEmail(Email email, string fromAddress, string password)
     {
-        using (var client = new MailKit.Net.Smtp.SmtpClient())
+        using (var client = new SmtpClient())
         {
             try
             {
-                client.Connect(smtpServer, port, useSsl);
+                client.Connect(smtpServer, port, SecureSocketOptions.StartTls);
                 client.Authenticate(fromAddress, password);
                 client.Send(email.Message);
                 Console.WriteLine("Email Sent!");
@@ -37,4 +38,3 @@ public class EmailSender
         }
     }
 }
-

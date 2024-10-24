@@ -25,4 +25,3 @@ public class Email
         Message.Body = bodyBuilder.ToMessageBody();
     }
 }
-
