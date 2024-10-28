@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+	<session-factory>
+		<property name="connection.driver_class">NHibernate.Driver.MicrosoftDataSqlClientDriver</property>
+		<property name="dialect">NHibernate.Dialect.MsSql2012Dialect</property>
+		<property name="connection.connection_string">
+			Data Source=DESKTOP-S258JJS;Initial Catalog=my_db;Integrated Security=True;TrustServerCertificate=True
+		</property>
+
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<property name="connection.release_mode">on_close</property>
+
+		<mapping resource="EverythingAboutNHibernate.Birds.hbm.xml" assembly="EverythingAboutNHibernate" />
+
+	</session-factory>
+</hibernate-configuration>
