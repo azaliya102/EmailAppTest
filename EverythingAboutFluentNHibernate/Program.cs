@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using EverythingAboutFluentNHibernate;
 
@@ -11,27 +9,21 @@ class Program
 
     static void Main(string[] args)
     {
-        var serviceCollection = new ServiceCollection();
-        ConfigureServices(serviceCollection);
+        var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder
+                .AddConsole()
+                .SetMinimumLevel(LogLevel.Debug);
+        });
 
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        _logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        _logger = loggerFactory.CreateLogger<Program>();
 
         _logger.LogInformation("Application started.");
 
         BirdsCheckout();
-        //AddNewBirdie("Robert", "Oppenheimer");
+        // AddNewBirdie("Robert", "Oppenheimer");
 
         _logger.LogInformation("Application finished.");
-    }
-
-    private static void ConfigureServices(IServiceCollection services)
-    {
-        services.AddLogging(configure =>
-        {
-            configure.AddConsole();
-            configure.SetMinimumLevel(LogLevel.Debug); 
-        });
     }
 
     static void BirdsCheckout()
@@ -44,17 +36,17 @@ class Program
 
             if (birdsList.Any())
             {
-                _logger.LogInformation("Fetched bird list from database.");
+                _logger.LogInformation("Got bird list from my db.");
             }
             else
             {
                 _logger.LogWarning("No birds found in database.");
             }
 
-            Console.WriteLine("Your birds:");
+            _logger.LogInformation("These are your birds:");
             foreach (var bird in birdsList)
             {
-                Console.WriteLine($"ID: {bird.ID}, Name: {bird.Name}, LastName: {bird.LastName}");
+                _logger.LogInformation($"ID: {bird.ID}, Name: {bird.Name}, LastName: {bird.LastName}");
             }
         }
 
@@ -81,7 +73,7 @@ class Program
             }
         }
 
-        Console.WriteLine("Your bird's been added");
+        _logger.LogInformation("Your bird's been added");
     }
 
     static void UpdateBirdie(int id, string newName, string newLastName)
