@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
 
-
 namespace EverythingAboutFluentNHibernate
 {
-    class BirdsMapping: ClassMap <Birds>
+    class BirdsMapping: ClassMap<Birds>
     {
         public BirdsMapping()
         {

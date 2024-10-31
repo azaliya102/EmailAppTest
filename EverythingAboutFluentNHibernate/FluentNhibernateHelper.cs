@@ -28,21 +28,10 @@ public class FluentNHibernateHelper
         .ShowSql())
     .Mappings(m => m.FluentMappings.AddFromAssemblyOf<FluentNHibernateHelper>())
     .BuildSessionFactory();
-
     }
 
     public static ISession OpenSession()
     {
         return SessionFactory.OpenSession();
-    }
-
-    public static void CloseSessionFactory()
-    {
-        if (_sessionFactory != null)
-        {
-            _sessionFactory.Close();
-            _sessionFactory.Dispose();
-            _sessionFactory = null;
-        }
     }
 }

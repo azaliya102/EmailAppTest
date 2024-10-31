@@ -1,14 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 class Program
 {
     static void Main()
     {
+        DBLinQExamples();
+        CollectionsLinQExamples();
+    }
+    static void DBLinQExamples()
+    {
         using (var context = new AppDbContext())
         {
-            // a simple one 
-
+            Console.WriteLine("\n============ Simple Select Query ============\n");
             var salaries = context.Employees.Select(emp => emp.sal).ToList();
 
             foreach (var salary in salaries)
@@ -16,11 +21,9 @@ class Program
                 Console.WriteLine(salary);
             }
 
-            // inner - join  
-
+            Console.WriteLine("\n============ Inner-Join Query ============\n");
             var query = from emp in context.Employees
-                        join dept in context.Departments
-                        on emp.deptno equals dept.deptno
+                        join dept in context.Departments on emp.deptno equals dept.deptno
                         select new
                         {
                             EmployeeName = emp.ename,
@@ -32,34 +35,11 @@ class Program
 
             foreach (var result in query)
             {
-                //Console.WriteLine(result);
-
-                Console.WriteLine($"Name: {result.EmployeeName}, " +
-                    $"Job: {result.Job}, " +
-                    $"Salary: {result.Salary}, " +
-                    $"DepartmentName: {result.DepartmentName}, " +
-                    $"DeptLocation: {result.DepartmentLocation}"); // this one looks prettier
+                Console.WriteLine($"Name: {result.EmployeeName}, Job: {result.Job}, Salary: {result.Salary}, " +
+                                  $"DepartmentName: {result.DepartmentName}, DeptLocation: {result.DepartmentLocation}");
             }
 
-            // insert 
-
-            Employee budgieEmployee = new Employee
-            {
-                empno = 8458,
-                ename = "Sean",
-                job = "Salesman",
-                mgr = null,
-                hiredate = DateTime.Now,
-                sal = 5000,
-                comm = 5000,
-                deptno = 30
-            };
-
-            context.Employees.Add(budgieEmployee);
-            context.SaveChanges();
-
-            // with orderBy
-
+            Console.WriteLine("\n============ OrderBy Query ============\n");
             var orderedQuery = from emp in context.Employees
                                orderby emp.ename ascending
                                select new
@@ -74,7 +54,7 @@ class Program
                 Console.WriteLine($"Employee: {employee.ename}, Job: {employee.job}, Salary: {employee.sal}");
             }
 
-            // with where
+            Console.WriteLine("\n============ Filtering Query ============\n");
             var whereQuery = from emp in context.Employees
                              where emp.sal > 1500
                              select new
@@ -89,34 +69,47 @@ class Program
                 Console.WriteLine($"Employee: {employee.ename}, Job: {employee.job}, Salary: {employee.sal}");
             }
 
-            // update 
+            Console.WriteLine("\n============ Where with Lambda Query ============\n");
+            var nameQuery = context.Employees.Where(s => s.ename.Contains("SEAN"));
 
-            var updateQuery = from emp in context.Employees
-                              where emp.job == "Salesman"
-                              select emp;
-            foreach (Employee emp in updateQuery)
+            foreach (var emp in nameQuery)
             {
-                emp.job = "SALESMAN";
+                Console.WriteLine($"His name is {emp.ename} and his job is a {emp.job}");
             }
-            context.SaveChanges();
-
-            // simple lambda function
-
-            int[] nums = { 1, 2, 3, 4, 5, 6 };
-            var sumOfSquaredNums = nums.Select(x => x * x).Sum();
-            Console.WriteLine(string.Join(" ", sumOfSquaredNums));
-
-            // where with lambda expression
-
-            var name = context.Employees.Where(s => s.ename.Contains("SEAN"));
-
-            foreach (Employee s in name)
-            {
-                Console.WriteLine($"His name is {s.ename} and his job is a {s.job}");
-            }
-
-
         }
-
     }
+
+    static void CollectionsLinQExamples()
+    {
+        Console.WriteLine("\n============ LINQ with Collections and lambda query ============");
+
+        int[] nums = { 1, 2, 3, 4, 5, 6 };
+        var sumOfSquaredNums = nums.Select(x => x * x).Sum();
+        Console.WriteLine("\nSum of squared numbers: " + sumOfSquaredNums);
+
+        Console.WriteLine("\n============ inner-join with 2 collections  ============");
+        List<int> IDs = new List<int> { 1, 2, 3 };
+        List<Product> products = new List<Product>
+        {
+            new Product { Id = 1, Name = "Laptop" },
+            new Product { Id = 2, Name = "Phone" },
+            new Product { Id = 3, Name = "Tablet" },
+            new Product { Id = 4, Name = "Monitor" }
+        };
+
+        var joinedProducts = from id in IDs
+                             join product in products on id equals product.Id
+                             select product;
+
+        foreach (var product in joinedProducts)
+        {
+            Console.WriteLine($"Product Name: {product.Name}");
+        }
+    }
+}
+
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
 }
