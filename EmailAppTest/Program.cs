@@ -46,7 +46,7 @@ class Program
                        }
 
                        email.BuildMessage();
-                       var emailSender = new EmailSender("smtp.gmail.com", 587, true);
+                       var emailSender = new EmailSender("smtp.gmail.com", 587);
                        emailSender.SendEmail(email, emailAdressSender, password);
                        Console.WriteLine("Email sent from: " + emailAdressSender + " to: " + emailAddressRecipient);
                    }

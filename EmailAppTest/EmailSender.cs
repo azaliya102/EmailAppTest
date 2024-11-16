@@ -7,13 +7,11 @@ public class EmailSender
 {
     private string smtpServer;
     private int port;
-    private bool useSsl;
 
-    public EmailSender(string smtpServer, int port, bool useSsl)
+    public EmailSender(string smtpServer, int port)
     {
         this.smtpServer = smtpServer;
         this.port = port;
-        this.useSsl = useSsl;
     }
 
     public void SendEmail(Email email, string fromAddress, string password)
