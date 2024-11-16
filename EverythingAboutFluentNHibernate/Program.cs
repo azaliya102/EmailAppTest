@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using EverythingAboutFluentNHibernate;
 
 class Program
@@ -9,12 +10,18 @@ class Program
 
     static void Main(string[] args)
     {
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+
         var loggerFactory = LoggerFactory.Create(builder =>
         {
             builder
-                .AddConsole()
-                .SetMinimumLevel(LogLevel.Debug);
+                .AddConfiguration(configuration.GetSection("Logging")) 
+                .AddConsole();
         });
+
 
         _logger = loggerFactory.CreateLogger<Program>();
 
